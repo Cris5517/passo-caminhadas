@@ -18,6 +18,23 @@ Execute os testes com:
 
 Abra `http://localhost:8080` depois de iniciar a aplicação.
 
+## Publicar no Vercel
+
+O projeto inclui `Dockerfile.vercel`, que faz o Vercel executar a aplicação Spring como container e servir a interface e a API no mesmo domínio. O recurso de imagens Docker do Vercel está em beta e pode exigir habilitação na conta.
+
+1. Importe `Cris5517/passo-caminhadas` em [vercel.com/new](https://vercel.com/new).
+2. Adicione um PostgreSQL gerenciado (por exemplo, pela integração Neon no Vercel) e defina as variáveis abaixo em **Settings > Environment Variables**.
+3. Faça um novo deploy para aplicar as variáveis.
+
+| Variável | Valor |
+| --- | --- |
+| `SPRING_PROFILES_ACTIVE` | `vercel` |
+| `DATABASE_URL` | URL JDBC PostgreSQL, por exemplo `jdbc:postgresql://host/banco?sslmode=require` |
+| `APP_SECURITY_USERNAME` | Usuário escolhido para entrar no app |
+| `APP_SECURITY_PASSWORD` | Senha com pelo menos 16 caracteres |
+
+Marque as credenciais do banco e do app como secretas no Vercel. Não use H2 em produção: o sistema de arquivos dos containers do Vercel é efêmero. A interface e a API compartilham o mesmo login HTTP Basic.
+
 ## Caminhadas
 
 O navegador pede permissão para acessar o GPS ao iniciar uma sessão. O mapa usa dados do OpenStreetMap.
@@ -61,5 +78,5 @@ O título é obrigatório e aceita até 120 caracteres. A descrição aceita at�
 
 Localmente, os dados são guardados em um arquivo H2 (`taskdb.mv.db`), ignorado pelo Git; o console fica em `/h2-console` com JDBC URL `jdbc:h2:file:./taskdb`, usuário `sa` e senha vazia. Em produção, o perfil Render usa PostgreSQL gerenciado. O plano gratuito do PostgreSQL expira após 30 dias e o web service gratuito dorme após 15 minutos sem tráfego; para guardar histórico continuamente, escolha um banco pago antes desse prazo.
 
-Na criação do Blueprint do Render, informe `APP_SECURITY_USERNAME` e uma senha `APP_SECURITY_PASSWORD` com pelo menos 16 caracteres. Em produção, a tela e a API pedem essas credenciais via HTTP Basic.
+Na publicação no Render, informe `APP_SECURITY_USERNAME` e uma senha `APP_SECURITY_PASSWORD` com pelo menos 16 caracteres. Em produção, a tela e a API pedem essas credenciais via HTTP Basic.
 
