@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: passo-caminhadas
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: APP_SECURITY_USERNAME
+        sync: false
+      - key: APP_SECURITY_PASSWORD
+        sync: false
