@@ -27,10 +27,8 @@ public class SecurityConfiguration {
 				.csrf(AbstractHttpConfigurer::disable)
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/", "/index.html", "/styles.css", "/app.js", "/favicon.ico").permitAll()
 						.requestMatchers("/h2-console/**").denyAll()
-						.requestMatchers("/api/**").authenticated()
-						.anyRequest().denyAll())
+						.anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())
 				.build();
 	}

@@ -59,5 +59,7 @@ O título é obrigatório e aceita até 120 caracteres. A descrição aceita at�
 
 ## Banco de dados
 
-Os dados são guardados em um arquivo H2 local (`taskdb.mv.db`) e permanecem após reiniciar a aplicação. O arquivo é ignorado pelo Git. O console H2 fica disponível em `/h2-console`, com JDBC URL `jdbc:h2:file:./taskdb`, usuário `sa` e senha vazia.
+Localmente, os dados são guardados em um arquivo H2 (`taskdb.mv.db`), ignorado pelo Git; o console fica em `/h2-console` com JDBC URL `jdbc:h2:file:./taskdb`, usuário `sa` e senha vazia. Em produção, o perfil Render usa PostgreSQL gerenciado. O plano gratuito do PostgreSQL expira após 30 dias e o web service gratuito dorme após 15 minutos sem tráfego; para guardar histórico continuamente, escolha um banco pago antes desse prazo.
+
+Na criação do Blueprint do Render, informe `APP_SECURITY_USERNAME` e uma senha `APP_SECURITY_PASSWORD` com pelo menos 16 caracteres. Em produção, a tela e a API pedem essas credenciais via HTTP Basic.
 

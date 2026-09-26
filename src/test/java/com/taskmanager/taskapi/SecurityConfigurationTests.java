@@ -36,7 +36,9 @@ class SecurityConfigurationTests {
 	}
 
 	@Test
-	void webInterfaceRemainsPublic() throws Exception {
-		mockMvc.perform(get("/")).andExpect(status().isOk());
+	void webInterfaceUsesTheSameAuthenticationAsTheApi() throws Exception {
+		mockMvc.perform(get("/")).andExpect(status().isUnauthorized());
+		mockMvc.perform(get("/").with(httpBasic("walk-security-test", "local-test-password-1234")))
+				.andExpect(status().isOk());
 	}
 }
